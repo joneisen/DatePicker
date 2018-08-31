@@ -3,7 +3,7 @@ Begin WebContainer SimplePicker
    Compatibility   =   ""
    Cursor          =   0
    Enabled         =   True
-   Height          =   193
+   Height          =   225
    HelpTag         =   ""
    HorizontalCenter=   0
    Index           =   -2147483648
@@ -33,7 +33,7 @@ Begin WebContainer SimplePicker
    Begin WebRectangle rectBG
       Cursor          =   0
       Enabled         =   True
-      Height          =   193
+      Height          =   226
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648
@@ -82,7 +82,7 @@ Begin WebContainer SimplePicker
       Scope           =   0
       Style           =   "0"
       TabOrder        =   44
-      Text            =   "Untitled"
+      Text            =   "Year"
       TextAlign       =   2
       Top             =   168
       VerticalCenter  =   0
@@ -1734,7 +1734,7 @@ Begin WebContainer SimplePicker
       Scope           =   0
       Style           =   "0"
       TabOrder        =   44
-      Text            =   "Untitled"
+      Text            =   "Month"
       TextAlign       =   2
       Top             =   3
       VerticalCenter  =   0
@@ -1894,6 +1894,42 @@ Begin WebContainer SimplePicker
       _OpenEventFired =   "False"
       _VerticalPercent=   "0.0"
    End
+   Begin WebLabel lblToday
+      Cursor          =   1
+      Enabled         =   True
+      HasFocusRing    =   True
+      Height          =   22
+      HelpTag         =   ""
+      HorizontalCenter=   0
+      Index           =   -2147483648
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockHorizontal  =   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      LockVertical    =   False
+      Multiline       =   False
+      Scope           =   0
+      Style           =   "0"
+      TabOrder        =   44
+      Text            =   "Today"
+      TextAlign       =   2
+      Top             =   194
+      VerticalCenter  =   0
+      Visible         =   True
+      Width           =   188
+      ZIndex          =   1
+      _DeclareLineRendered=   "False"
+      _HorizontalPercent=   "0.0"
+      _IsEmbedded     =   "False"
+      _Locked         =   "False"
+      _NeedsRendering =   True
+      _OfficialControl=   "False"
+      _OpenEventFired =   "False"
+      _VerticalPercent=   "0.0"
+   End
 End
 #tag EndWebPage
 
@@ -1909,6 +1945,7 @@ End
 		  If ClassicDateType And CoreDateType Then
 		    
 		    coreNow = Xojo.Core.Date.Now
+		    now = New Date
 		    
 		    ShowMonth
 		    
@@ -1917,7 +1954,7 @@ End
 		  Elseif ClassicDateType Then
 		    
 		    //get today's date
-		    now=new date
+		    now = New date
 		    
 		    //show the month
 		    ShowMonth
@@ -1936,13 +1973,13 @@ End
 		  
 		  
 		  
-		  For i As Integer = 0 To 36
-		    If lblDay( i ).Text = Str( Today.Day ) Then
-		      lblDay( i ).Style = FocusDate
-		    Else
-		      lblDay( i ).Style = Centered
-		    End If
-		  Next
+		  //For i As Integer = 0 To 36
+		  //If lblDay( i ).Text = Str( Today.Day ) Then
+		  //lblDay( i ).Style = FocusDate
+		  //Else
+		  //lblDay( i ).Style = Centered
+		  //End If
+		  //Next
 		End Sub
 	#tag EndEvent
 
@@ -2015,6 +2052,42 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub SelectedDay(index as integer = 0)
+		  If ClassicDateType And CoreDateType Then
+		    
+		    For i As Integer = 0 To 36
+		      If lblDay( i ).Text = Str( now.Day ) Then
+		        lblDay( i ).Style = FocusDate
+		      Else
+		        lblDay( i ).Style = Centered
+		      End If
+		    Next
+		    
+		  Elseif ClassicDateType Then
+		    
+		    For i As Integer = 0 To 36
+		      If lblDay( i ).Text = Str( Now.Day ) Then
+		        lblDay( i ).Style = FocusDate
+		      Else
+		        lblDay( i ).Style = Centered
+		      End If
+		    Next
+		    
+		  Elseif CoreDateType Then
+		    
+		    For i As Integer = 0 To 36
+		      If lblDay( i ).Text = Str( coreNow.Day ) Then
+		        lblDay( i ).Style = FocusDate
+		      Else
+		        lblDay( i ).Style = Centered
+		      End If
+		    Next
+		    
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub ShowMonth()
 		  Dim i As Integer
 		  
@@ -2023,8 +2096,42 @@ End
 		    lblDay( i ).Text = ""
 		  Next
 		  
-		  
-		  If ClassicDateType Then
+		  If ClassicDateType And CoreDateType Then
+		    
+		    //Just in case
+		    initCoreDate
+		    
+		    //Set day = 1
+		    If coreNow.day > 1 Then
+		      
+		      Dim int As New Xojo.Core.DateInterval
+		      int.Days = coreNow.Day - 1
+		      coreNow = coreNow - int
+		      
+		    Else
+		      //They should be equal
+		    End If
+		    
+		    
+		    //show month/year
+		    lblMonth.Text = MonthOfYearToText( coreNow.month )
+		    lblYear.Text = Str( coreNow.year )
+		    
+		    //display calendar
+		    i = coreNow.DayOfWeek - 1
+		    
+		    Do
+		      lblDay( i ).Text = Str( coreNow.Day )
+		      Dim int As New Xojo.Core.DateInterval( 0, 0, 1 )
+		      coreNow = coreNow + int
+		      i = i + 1
+		    Loop Until coreNow.day = 1
+		    
+		    //we've gone on a month, so step back
+		    Dim int As New Xojo.Core.DateInterval( 0, 1 )
+		    coreNow = coreNow - int
+		    
+		  Elseif ClassicDateType Then
 		    //set date from scrollbar value
 		    now.day=1
 		    //now.Month=1+ScrollBar1.Value mod 12
@@ -2045,7 +2152,7 @@ End
 		    //we've gone on a month, so step back
 		    now.month = now.month - 1
 		    
-		  Elseif CoreDateType Then //Keep this as an elseif so you only render once, even if you want both date types
+		  Elseif CoreDateType Then
 		    
 		    //Just in case
 		    initCoreDate
@@ -2081,6 +2188,8 @@ End
 		    coreNow = coreNow - int
 		    
 		  End If
+		  
+		  SelectedDay
 		End Sub
 	#tag EndMethod
 
@@ -2151,11 +2260,13 @@ End
 		  End If
 		  
 		  
-		  For i As Integer = 0 To 36
-		    lblDay( i ).Style = Centered
-		  Next
+		  //For i As Integer = 0 To 36
+		  //lblDay( i ).Style = Centered
+		  //Next
+		  //
+		  //lblDay( index ).Style = FocusDate
 		  
-		  lblDay( index ).Style = FocusDate
+		  SelectedDay( index )
 		  
 		  RaiseEvent DateChosen
 		End Sub
@@ -2164,8 +2275,6 @@ End
 #tag Events lblNextMonth
 	#tag Event
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
-		  //ScrollBar1.Value = scrollbar1.Value + 1
-		  
 		  If ClassicDateType Then
 		    
 		    now.Month = now.month + 1
@@ -2191,8 +2300,6 @@ End
 #tag Events lblPrevMonth
 	#tag Event
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
-		  //ScrollBar1.Value = scrollbar1.Value - 1
-		  
 		  If ClassicDateType Then
 		    
 		    now.Month = now.month - 1
@@ -2218,8 +2325,6 @@ End
 #tag Events lblPrevYear
 	#tag Event
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
-		  //ScrollBar1.Value = scrollbar1.Value - 12
-		  
 		  If ClassicDateType Then
 		    
 		    now.Year= now.Year - 1
@@ -2245,8 +2350,6 @@ End
 #tag Events lblNextYear
 	#tag Event
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
-		  //ScrollBar1.Value = scrollbar1.Value + 12
-		  
 		  If ClassicDateType Then
 		    
 		    now.Year= now.Year + 1
@@ -2262,6 +2365,28 @@ End
 		    int.Years = 1
 		    
 		    coreNow = coreNow + int
+		    
+		  End If
+		  
+		  ShowMonth
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events lblToday
+	#tag Event
+		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
+		  If ClassicDateType Then
+		    
+		    now = New Date
+		    
+		  End If
+		  
+		  If CoreDateType Then
+		    
+		    //Just in case
+		    initCoreDate
+		    
+		    coreNow = Xojo.Core.Date.Now
 		    
 		  End If
 		  

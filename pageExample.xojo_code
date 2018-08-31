@@ -1,5 +1,5 @@
 #tag WebPage
-Begin WebPage WebPage1
+Begin WebPage pageExample
    Compatibility   =   ""
    Cursor          =   0
    Enabled         =   True
@@ -20,7 +20,7 @@ Begin WebPage WebPage1
    MinWidth        =   600
    Style           =   "None"
    TabOrder        =   0
-   Title           =   "Untitled"
+   Title           =   "Examples"
    Top             =   0
    VerticalCenter  =   0
    Visible         =   True
@@ -39,7 +39,7 @@ Begin WebPage WebPage1
    Begin SimplePicker SimplePicker1
       Cursor          =   0
       Enabled         =   True
-      Height          =   193
+      Height          =   225
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648
@@ -74,11 +74,11 @@ Begin WebPage WebPage1
    Begin PopupPicker PopupPicker1
       Cursor          =   0
       Enabled         =   True
-      Height          =   225
+      Height          =   250
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648
-      Left            =   253
+      Left            =   250
       LockBottom      =   False
       LockedInPosition=   False
       LockHorizontal  =   False
@@ -108,7 +108,7 @@ Begin WebPage WebPage1
    Begin ButtonPicker ButtonPicker1
       Cursor          =   0
       Enabled         =   True
-      Height          =   225
+      Height          =   250
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648

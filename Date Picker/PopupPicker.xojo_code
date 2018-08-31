@@ -3,7 +3,7 @@ Begin WebContainer PopupPicker
    Compatibility   =   ""
    Cursor          =   0
    Enabled         =   True
-   Height          =   225
+   Height          =   250
    HelpTag         =   ""
    HorizontalCenter=   0
    Index           =   -2147483648
@@ -68,7 +68,7 @@ Begin WebContainer PopupPicker
    Begin ButtonPicker ButtonPicker1
       Cursor          =   0
       Enabled         =   True
-      Height          =   225
+      Height          =   250
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648

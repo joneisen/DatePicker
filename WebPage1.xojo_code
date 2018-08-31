@@ -24,7 +24,7 @@ Begin WebPage WebPage1
    Top             =   0
    VerticalCenter  =   0
    Visible         =   True
-   Width           =   600
+   Width           =   689
    ZIndex          =   1
    _DeclareLineRendered=   False
    _HorizontalPercent=   0.0
@@ -78,7 +78,7 @@ Begin WebPage WebPage1
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648
-      Left            =   284
+      Left            =   253
       LockBottom      =   False
       LockedInPosition=   False
       LockHorizontal  =   False
@@ -90,7 +90,7 @@ Begin WebPage WebPage1
       ScrollbarsVisible=   2
       Style           =   "0"
       TabOrder        =   1
-      Top             =   64
+      Top             =   46
       VerticalCenter  =   0
       Visible         =   True
       Width           =   188
@@ -112,7 +112,7 @@ Begin WebPage WebPage1
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648
-      Left            =   84
+      Left            =   481
       LockBottom      =   False
       LockedInPosition=   False
       LockHorizontal  =   False
@@ -124,7 +124,7 @@ Begin WebPage WebPage1
       ScrollbarsVisible=   2
       Style           =   "0"
       TabOrder        =   2
-      Top             =   350
+      Top             =   46
       VerticalCenter  =   0
       Visible         =   True
       Width           =   188

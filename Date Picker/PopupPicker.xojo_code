@@ -108,21 +108,21 @@ End
 #tag Events txtDateField
 	#tag Event
 		Sub GotFocus()
-		  ButtonPicker1.Visibility = True
+		  ButtonPicker1.Visibility( True )
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events ButtonPicker1
 	#tag Event
 		Sub DateChosen()
-		  If Me.SimplePicker1.kClassicDateType Then
+		  If Me.SimplePicker1.ClassicDateType Then
 		    txtDateField.Text = Me.SimplePicker1.now.SQLDate
 		  Else
 		    Dim date() As Text = Me.SimplePicker1.coreNow.ToText.Split( " " )
 		    txtDateField.Text = date( 0 )
 		  End If
 		  
-		  Me.Visible = False
+		  Me.Visibility( False )
 		End Sub
 	#tag EndEvent
 #tag EndEvents

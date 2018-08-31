@@ -1906,7 +1906,7 @@ End
 		  initCoreDate
 		  
 		  
-		  If kClassicDateType And kCoreDateType Then
+		  If ClassicDateType And CoreDateType Then
 		    
 		    coreNow = Xojo.Core.Date.Now
 		    
@@ -1914,7 +1914,7 @@ End
 		    
 		    lblMonth.Text = MonthOfYearToText( coreNow.month )
 		    
-		  Elseif kClassicDateType Then
+		  Elseif ClassicDateType Then
 		    
 		    //get today's date
 		    now=new date
@@ -1924,7 +1924,7 @@ End
 		    
 		    lblMonth.Text = MonthOfYearToText( now.month )
 		    
-		  Elseif kCoreDateType Then
+		  Elseif CoreDateType Then
 		    
 		    coreNow = Xojo.Core.Date.Now
 		    
@@ -2024,7 +2024,7 @@ End
 		  Next
 		  
 		  
-		  If kClassicDateType Then
+		  If ClassicDateType Then
 		    //set date from scrollbar value
 		    now.day=1
 		    //now.Month=1+ScrollBar1.Value mod 12
@@ -2045,7 +2045,7 @@ End
 		    //we've gone on a month, so step back
 		    now.month = now.month - 1
 		    
-		  Elseif kCoreDateType Then //Keep this as an elseif so you only render once, even if you want both date types
+		  Elseif CoreDateType Then //Keep this as an elseif so you only render once, even if you want both date types
 		    
 		    //Just in case
 		    initCoreDate
@@ -2090,6 +2090,20 @@ End
 	#tag EndHook
 
 
+	#tag Note, Name = Config Notes
+		Set the properties CoreDateType and ClassicDateType as you need them. They are both set to true as a default, but you can get better performance if you only have the one you need on. These are properties so they can be changed as needed in code.
+		
+	#tag EndNote
+
+
+	#tag Property, Flags = &h0
+		ClassicDateType As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		CoreDateType As Boolean = True
+	#tag EndProperty
+
 	#tag Property, Flags = &h0
 		coreNow As Xojo.Core.Date
 	#tag EndProperty
@@ -2099,27 +2113,18 @@ End
 	#tag EndProperty
 
 
-	#tag Constant, Name = kClassicDateType, Type = Boolean, Dynamic = False, Default = \"", Scope = Public
-		#Tag Instance, Platform = Any, Language = Default, Definition  = \"False"
-	#tag EndConstant
-
-	#tag Constant, Name = kCoreDateType, Type = Boolean, Dynamic = False, Default = \"", Scope = Public
-		#Tag Instance, Platform = Any, Language = Default, Definition  = \"True"
-	#tag EndConstant
-
-
 #tag EndWindowCode
 
 #tag Events lblDay
 	#tag Event
 		Sub MouseDown(index as Integer, X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
-		  If kClassicDateType Then
+		  If ClassicDateType Then
 		    If lblDay( index ).Text <>"" Then
 		      now.day=Val( lblDay( index ).Text )
 		    End If
 		    
 		  End If
-		  If kCoreDateType Then
+		  If CoreDateType Then
 		    
 		    //Just in case
 		    initCoreDate
@@ -2161,13 +2166,13 @@ End
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
 		  //ScrollBar1.Value = scrollbar1.Value + 1
 		  
-		  If kClassicDateType Then
+		  If ClassicDateType Then
 		    
 		    now.Month = now.month + 1
 		    
 		  End If
 		  
-		  If kCoreDateType Then
+		  If CoreDateType Then
 		    
 		    //Just in case
 		    initCoreDate
@@ -2188,13 +2193,13 @@ End
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
 		  //ScrollBar1.Value = scrollbar1.Value - 1
 		  
-		  If kClassicDateType Then
+		  If ClassicDateType Then
 		    
 		    now.Month = now.month - 1
 		    
 		  End If
 		  
-		  If kCoreDateType Then
+		  If CoreDateType Then
 		    
 		    //Just in case
 		    initCoreDate
@@ -2215,13 +2220,13 @@ End
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
 		  //ScrollBar1.Value = scrollbar1.Value - 12
 		  
-		  If kClassicDateType Then
+		  If ClassicDateType Then
 		    
 		    now.Year= now.Year - 1
 		    
 		  End If
 		  
-		  If kCoreDateType Then
+		  If CoreDateType Then
 		    
 		    //Just in case
 		    initCoreDate
@@ -2242,13 +2247,13 @@ End
 		Sub MouseDown(X As Integer, Y As Integer, Details As REALbasic.MouseEvent)
 		  //ScrollBar1.Value = scrollbar1.Value + 12
 		  
-		  If kClassicDateType Then
+		  If ClassicDateType Then
 		    
 		    now.Year= now.Year + 1
 		    
 		  End If
 		  
-		  If kCoreDateType Then
+		  If CoreDateType Then
 		    
 		    //Just in case
 		    initCoreDate
@@ -2494,9 +2499,15 @@ End
 		Type="Double"
 	#tag EndViewProperty
 	#tag ViewProperty
-		Name="SelectedDay"
+		Name="ClassicDateType"
 		Group="Behavior"
-		InitialValue="0"
-		Type="Integer"
+		InitialValue="True"
+		Type="Boolean"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="CoreDateType"
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
 	#tag EndViewProperty
 #tag EndViewBehavior

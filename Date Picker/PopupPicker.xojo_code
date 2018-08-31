@@ -14,7 +14,7 @@ Begin WebContainer PopupPicker
    LockRight       =   False
    LockTop         =   True
    LockVertical    =   False
-   Style           =   "None"
+   Style           =   "1284972543"
    TabOrder        =   0
    Top             =   0
    VerticalCenter  =   0
@@ -51,7 +51,7 @@ Begin WebContainer PopupPicker
       LockRight       =   False
       LockTop         =   True
       LockVertical    =   False
-      ReadOnly        =   False
+      ReadOnly        =   True
       Scope           =   0
       Style           =   "0"
       TabOrder        =   0
@@ -65,10 +65,10 @@ Begin WebContainer PopupPicker
       ZIndex          =   1
       _NeedsRendering =   True
    End
-   Begin SimplePicker SimplePicker1
+   Begin ButtonPicker ButtonPicker1
       Cursor          =   0
       Enabled         =   True
-      Height          =   193
+      Height          =   225
       HelpTag         =   ""
       HorizontalCenter=   0
       Index           =   -2147483648
@@ -81,12 +81,12 @@ Begin WebContainer PopupPicker
       LockTop         =   True
       LockVertical    =   False
       Scope           =   0
-      ScrollbarsVisible=   0
+      ScrollbarsVisible=   2
       Style           =   "0"
       TabOrder        =   1
-      Top             =   34
+      Top             =   0
       VerticalCenter  =   0
-      Visible         =   False
+      Visible         =   True
       Width           =   188
       ZIndex          =   1
       _DeclareLineRendered=   False
@@ -99,79 +99,30 @@ Begin WebContainer PopupPicker
       _ShownEventFired=   False
       _VerticalPercent=   0.0
    End
-   Begin WebImageView imgCalendar
-      AlignHorizontal =   2
-      AlignVertical   =   2
-      Cursor          =   0
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      HorizontalCenter=   0
-      Index           =   -2147483648
-      Left            =   166
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockHorizontal  =   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      LockVertical    =   False
-      Picture         =   643991551
-      ProtectImage    =   True
-      Scope           =   0
-      Style           =   "0"
-      TabOrder        =   -1
-      Top             =   0
-      URL             =   ""
-      VerticalCenter  =   0
-      Visible         =   True
-      Width           =   22
-      ZIndex          =   1
-      _NeedsRendering =   True
-   End
 End
 #tag EndWebPage
 
 #tag WindowCode
-	#tag Method, Flags = &h0
-		Function ProportionalScale(Pic as Picture, Width as integer, Height as Integer) As Picture
-		  // Calculate scale factor
-		  Dim factor As Double = Min( Height / Pic.Height, Width / Pic.Width )
-		  
-		  // Calculate New Size
-		  Dim w As Integer = pic.Width * factor
-		  Dim h As Integer = pic.Height * factor
-		  
-		  // Create New Picture
-		  Dim NewPic As New Picture( w, h )
-		  
-		  // Draw picture in the new size
-		  NewPic.Graphics.DrawPicture( Pic, 0, 0, w, h, 0, 0, Pic.Width, Pic.Height )
-		  
-		  // Return Scaled Image
-		  Return NewPic
-		End Function
-	#tag EndMethod
-
-
 #tag EndWindowCode
 
-#tag Events SimplePicker1
+#tag Events txtDateField
 	#tag Event
-		Sub DateChosen()
-		  If Me.kClassicDateType Then
-		    txtDateField.Text = Me.now.SQLDate
-		  Else
-		    Dim date() As String = Me.coreNow.ToText.Split( " " )
-		    txtDateField.Text = date( 0 )
-		  End If
+		Sub GotFocus()
+		  ButtonPicker1.Visibility = True
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events imgCalendar
+#tag Events ButtonPicker1
 	#tag Event
-		Sub Resized()
-		  Me.Picture = ProportionalScale( Me.Picture, Me.Width - 2, Me.Height - 2 )
+		Sub DateChosen()
+		  If Me.SimplePicker1.kClassicDateType Then
+		    txtDateField.Text = Me.SimplePicker1.now.SQLDate
+		  Else
+		    Dim date() As Text = Me.SimplePicker1.coreNow.ToText.Split( " " )
+		    txtDateField.Text = date( 0 )
+		  End If
+		  
+		  Me.Visible = False
 		End Sub
 	#tag EndEvent
 #tag EndEvents
